@@ -1,0 +1,24 @@
+{
+  "name": "sudoku-express",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tailwindcss -i ./src/input.css -o ./public/css/styles.css --minify",
+    "prestart": "npm run build",
+    "start": "node server.js",
+    "dev": "concurrently \"npm run dev:css\" \"npm run dev:server\"",
+    "dev:css": "tailwindcss -i ./src/input.css -o ./public/css/styles.css --watch",
+    "dev:server": "nodemon server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "concurrently": "^9.0.1",
+    "nodemon": "^3.1.7",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.14"
+  }
+}
