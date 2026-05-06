@@ -1,0 +1,135 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudoku</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Sora:wght@600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'game/css/styles.css' %}">
+</head>
+<body>
+    <div class="bg-blob blob-1"></div>
+    <div class="bg-blob blob-2"></div>
+    <div class="bg-blob blob-3"></div>
+
+    <canvas id="confetti-canvas"></canvas>
+
+    <div class="toast-container" id="toast-container"></div>
+
+    <div id="app">
+        <h1 class="game-title">Sudo<span>ku</span></h1>
+
+        <div class="stats-bar">
+            <div class="stat-item">
+                <i class="fa-regular fa-clock"></i>
+                <span class="stat-value" id="timer">00:00</span>
+            </div>
+            <div class="stat-item">
+                <i class="fa-regular fa-circle-xmark"></i>
+                <span class="stat-value" id="mistakes">0/3</span>
+            </div>
+            <div class="stat-item">
+                <span class="difficulty-badge" id="diff-badge">Easy</span>
+            </div>
+        </div>
+
+        <div class="tools-bar">
+            <button class="tool-btn" id="btn-undo" aria-label="Undo">
+                <i class="fa-solid fa-rotate-left"></i>
+                <span>Undo</span>
+            </button>
+            <button class="tool-btn" id="btn-erase" aria-label="Erase">
+                <i class="fa-regular fa-rectangle-xmark"></i>
+                <span>Erase</span>
+            </button>
+            <button class="tool-btn" id="btn-notes" aria-label="Toggle notes mode">
+                <i class="fa-regular fa-pen-to-square"></i>
+                <span>Notes</span>
+            </button>
+            <button class="tool-btn" id="btn-hint" aria-label="Get a hint">
+                <i class="fa-regular fa-lightbulb"></i>
+                <span>Hint</span>
+                <span class="tool-count" id="hint-count">3</span>
+            </button>
+        </div>
+
+        <div class="grid-wrapper">
+            <div class="sudoku-grid" id="grid" role="grid" aria-label="Sudoku puzzle grid"></div>
+        </div>
+
+        <div class="numpad" id="numpad"></div>
+
+        <button class="new-game-btn" id="btn-new-game">New Game</button>
+    </div>
+
+    <div class="modal-overlay" id="modal-new-game">
+        <div class="modal-box">
+            <div class="modal-title">New Game</div>
+            <div class="modal-subtitle">Choose your difficulty level</div>
+            <div class="diff-card" data-diff="easy">
+                <div class="diff-icon" style="background:rgba(92,184,92,0.15);color:#5CB85C;">
+                    <i class="fa-solid fa-seedling"></i>
+                </div>
+                <div class="diff-card-info">
+                    <h3>Easy</h3>
+                    <p>36 blanks — relaxed solving</p>
+                </div>
+            </div>
+            <div class="diff-card" data-diff="medium">
+                <div class="diff-icon" style="background:rgba(232,168,56,0.15);color:#E8A838;">
+                    <i class="fa-solid fa-fire"></i>
+                </div>
+                <div class="diff-card-info">
+                    <h3>Medium</h3>
+                    <p>46 blanks — some challenge</p>
+                </div>
+            </div>
+            <div class="diff-card" data-diff="hard">
+                <div class="diff-icon" style="background:rgba(232,84,84,0.15);color:#E85454;">
+                    <i class="fa-solid fa-skull"></i>
+                </div>
+                <div class="diff-card-info">
+                    <h3>Hard</h3>
+                    <p>54 blanks — expert level</p>
+                </div>
+            </div>
+            <button class="modal-btn modal-btn-ghost" id="btn-cancel-new">Cancel</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-win">
+        <div class="modal-box" style="text-align:center;">
+            <div class="modal-title" style="color:var(--accent);">Puzzle Complete</div>
+            <div class="modal-subtitle">You solved it — well done!</div>
+            <div class="win-stats">
+                <div class="win-stat">
+                    <div class="win-stat-value" id="win-time">00:00</div>
+                    <div class="win-stat-label">Time</div>
+                </div>
+                <div class="win-stat">
+                    <div class="win-stat-value" id="win-mistakes">0</div>
+                    <div class="win-stat-label">Mistakes</div>
+                </div>
+                <div class="win-stat">
+                    <div class="win-stat-value" id="win-diff">Easy</div>
+                    <div class="win-stat-label">Difficulty</div>
+                </div>
+            </div>
+            <button class="modal-btn modal-btn-primary" id="btn-win-new">Play Again</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-gameover">
+        <div class="modal-box" style="text-align:center;">
+            <div class="modal-title" style="color:var(--fg-error);">Game Over</div>
+            <div class="modal-subtitle">You made 3 mistakes. Better luck next time!</div>
+            <button class="modal-btn modal-btn-primary" id="btn-gameover-retry" style="margin-bottom:8px;">Try Again</button>
+            <button class="modal-btn modal-btn-ghost" id="btn-gameover-new">New Game</button>
+        </div>
+    </div>
+
+    <script src="{% static 'game/js/game.js' %}" defer></script>
+</body>
+</html>
