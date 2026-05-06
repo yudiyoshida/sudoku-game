@@ -1,0 +1,11 @@
+/* Original #app in static build only wrapped the game column; Vue mounts at #app with extra siblings. */
+.game-column {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
